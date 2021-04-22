@@ -16,6 +16,20 @@ export default class App extends Component {
         {label: 'I need a break..', important: false, like: false, id: 3},
       ]
     }
+    this.onToggleImportant = this.onToggleImportant.bind(this);
+  }
+
+  onToggleImportant(id) {
+    this.setState(({data}) => {
+      const index = data.findIndex(item => item.id === id);
+      const old = data[index];
+      const newItem = {...old, important: !old.important};
+      const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+      return {
+        data: newArr 
+      }
+    })
   }
 
   render() {
@@ -28,7 +42,8 @@ export default class App extends Component {
           <PostStatusFilter/>
         </div>
         <PostList
-          posts={data}/>
+          posts={data}
+          onImportant={this.onToggleImportant}/>
         <PostAddForm/>
       </div>
     )
