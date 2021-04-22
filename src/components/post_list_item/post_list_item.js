@@ -1,12 +1,12 @@
 import React from 'react';
 import './post_list_item.css';
 
-const PostListItem = () => {
+const PostListItem = ({label}) => {
 
   return (
-    <li className='app-list-item d-flex justify-content-between'>
+    <div className='app-list-item d-flex justify-content-between'>
       <span className='app-list-item-label'>
-        Hello World!
+        {label}
       </span>
       <div className='d-flex justify-content-center align-items-center'>
         <button type='button' className='btn-star btn-sm'>
@@ -17,7 +17,7 @@ const PostListItem = () => {
         </button>
         <i className='fa fa-heart'></i>
       </div>
-    </li>
+    </div>
   )
 } 
 

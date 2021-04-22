@@ -19,6 +19,7 @@ export default class App extends Component {
   }
 
   render() {
+    const {data} = this.state;
     return (
       <div className='app'>
         <AppHeader/>
@@ -26,7 +27,8 @@ export default class App extends Component {
           <SearchPanel/>
           <PostStatusFilter/>
         </div>
-        <PostList/>
+        <PostList
+          posts={data}/>
         <PostAddForm/>
       </div>
     )
