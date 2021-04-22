@@ -2,14 +2,15 @@ import React from 'react';
 import PostListItem from '../post_list_item';
 import './post_list.css';
 
-const PostList = ({posts}) => {
+const PostList = ({posts, onImportant}) => {
 
   const elements = posts.map(item => {
     const {id, ...itemProps} = item;
     return (
       <li key={id} className="list-group-item">
         <PostListItem
-          {...itemProps}/>
+          {...itemProps}
+          onImportant={() => onImportant(id)}/>
       </li>
     )
   })
