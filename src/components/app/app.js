@@ -17,6 +17,7 @@ export default class App extends Component {
       ]
     }
     this.onToggleImportant = this.onToggleImportant.bind(this);
+    this.onToggleLike = this.onToggleLike.bind(this);
   }
 
   onToggleImportant(id) {
@@ -32,6 +33,19 @@ export default class App extends Component {
     })
   }
 
+  onToggleLike(id) {
+    this.setState(({data}) => {
+      const index = data.findIndex(item => item.id === id);
+      const old = data[index];
+      const newItem = {...old, like: !old.like};
+      const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+      return {
+        data: newArr
+      }
+    })
+  }
+
   render() {
     const {data} = this.state;
     return (
@@ -43,7 +57,8 @@ export default class App extends Component {
         </div>
         <PostList
           posts={data}
-          onImportant={this.onToggleImportant}/>
+          onImportant={this.onToggleImportant}
+          onLike={this.onToggleLike}/>
         <PostAddForm/>
       </div>
     )

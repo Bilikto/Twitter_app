@@ -2,7 +2,7 @@ import React from 'react';
 import PostListItem from '../post_list_item';
 import './post_list.css';
 
-const PostList = ({posts, onImportant}) => {
+const PostList = ({posts, onImportant, onLike}) => {
 
   const elements = posts.map(item => {
     const {id, ...itemProps} = item;
@@ -10,7 +10,8 @@ const PostList = ({posts, onImportant}) => {
       <li key={id} className="list-group-item">
         <PostListItem
           {...itemProps}
-          onImportant={() => onImportant(id)}/>
+          onImportant={() => onImportant(id)}
+          onLike={() => onLike(id)}/>
       </li>
     )
   })

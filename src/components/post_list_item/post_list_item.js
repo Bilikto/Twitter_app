@@ -1,16 +1,22 @@
 import React from 'react';
 import './post_list_item.css';
 
-const PostListItem = ({label, onImportant, important}) => {
+const PostListItem = ({label, onImportant, onLike, important, like}) => {
 
   let className = 'app-list-item d-flex justify-content-between';
   if (important) {
     className += ' important';
   }
 
+  if (like) {
+    className += ' like';
+  }
+
   return (
     <div className={className}>
-      <span className='app-list-item-label'>
+      <span 
+        className='app-list-item-label'
+        onClick={onLike}>
         {label}
       </span>
       <div className='d-flex justify-content-center align-items-center'>
