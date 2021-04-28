@@ -16,9 +16,11 @@ export default class App extends Component {
         {label: 'I need a break..', important: false, like: false, id: 3},
       ]
     }
+    this.maxId = 4;
     this.onToggleImportant = this.onToggleImportant.bind(this);
     this.onToggleLike = this.onToggleLike.bind(this);
     this.onDeleteItem = this.onDeleteItem.bind(this);
+    this.onAddItem = this.onAddItem.bind(this);
   }
 
   onToggleImportant(id) {
@@ -27,7 +29,6 @@ export default class App extends Component {
       const old = data[index];
       const newItem = {...old, important: !old.important};
       const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
-
       return {
         data: newArr 
       }
@@ -40,7 +41,6 @@ export default class App extends Component {
       const old = data[index];
       const newItem = {...old, like: !old.like};
       const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
-
       return {
         data: newArr
       }
@@ -51,7 +51,22 @@ export default class App extends Component {
     this.setState(({data}) => {
       const index = data.findIndex(item => item.id === id);
       const newArr = [...data.slice(0, index), ...data.slice(index + 1)];
+      return {
+        data: newArr
+      }
+    })
+  }
 
+  onAddItem(body) {
+    const newItem = {
+      label: body,
+      important: false,
+      like: false,
+      id: this.maxId++
+    }
+
+    this.setState(({data}) => {
+      const newArr = [...data, newItem];
       return {
         data: newArr
       }
@@ -72,7 +87,8 @@ export default class App extends Component {
           onImportant={this.onToggleImportant}
           onLike={this.onToggleLike}
           onDelete={this.onDeleteItem}/>
-        <PostAddForm/>
+        <PostAddForm
+          onAdd={this.onAddItem}/>
       </div>
     )
   }
