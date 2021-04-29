@@ -102,11 +102,15 @@ export default class App extends Component {
 
   render() {
     const {data, term, filter} = this.state;
+    const liked = data.filter(item => item.like).length;
+    const allPosts = data.length;
     const visiblePosts = this.filterPosts(this.searchPosts(data, term), filter);
 
     return (
       <div className='app'>
-        <AppHeader/>
+        <AppHeader
+          liked={liked}
+          allPosts={allPosts}/>
         <div className='search-panel d-flex'>
           <SearchPanel
            onUpdateSearch={this.onUpdateSearch}/>
