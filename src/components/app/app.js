@@ -15,7 +15,8 @@ export default class App extends Component {
         {label: 'That is so good!', important: false, like: false, id: 2},
         {label: 'I need a break..', important: false, like: false, id: 3},
       ], 
-      term: ''
+      term: '',
+      filter: 'all'
     }
     this.maxId = 4;
     this.onToggleImportant = this.onToggleImportant.bind(this);
@@ -23,6 +24,7 @@ export default class App extends Component {
     this.onDeleteItem = this.onDeleteItem.bind(this);
     this.onAddItem = this.onAddItem.bind(this);
     this.onUpdateSearch = this.onUpdateSearch.bind(this);
+    this.onFilterSelect = this.onFilterSelect.bind(this);
   }
 
   onToggleImportant(id) {
@@ -86,10 +88,21 @@ export default class App extends Component {
     this.setState({term});
   }
 
+  filterPosts(items, filter) {
+    if (filter === 'like') {
+      return items.filter(item => item.like);
+    }
+    return items;
+  }
+
+  onFilterSelect(filter) {
+    this.setState({filter});
+  }
+
 
   render() {
-    const {data, term} = this.state;
-    const visiblePosts = this.searchPosts(data, term);
+    const {data, term, filter} = this.state;
+    const visiblePosts = this.filterPosts(this.searchPosts(data, term), filter);
 
     return (
       <div className='app'>
@@ -97,7 +110,9 @@ export default class App extends Component {
         <div className='search-panel d-flex'>
           <SearchPanel
            onUpdateSearch={this.onUpdateSearch}/>
-          <PostStatusFilter/>
+          <PostStatusFilter
+          filter={filter}
+          onFilterSelect={this.onFilterSelect}/>
         </div>
         <PostList
           posts={visiblePosts}
